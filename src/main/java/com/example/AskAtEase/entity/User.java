@@ -12,18 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "app_user")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "userId"
+        property = "user_id"
 )
 
 public class User {
 
     @Id
+    @Column(name="user_id")
     private String userId;
     private String name;
     private String email;

@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-// need to learn concpt of serialize and infinite recursion.
+// need to learn concept of serialize and infinite recursion.
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "queId"
+        property = "que_id"
 )
 @Data
 @Table(name="question")
@@ -22,12 +22,13 @@ public class Question {
     // learn persistance concept
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "que_id")
     Long queId;
     String question;
     LocalDateTime createdAt;
 
     @ManyToOne
-    @JoinColumn(name="userIDFK",referencedColumnName = "userId")
+    @JoinColumn(name="user_idfk",referencedColumnName = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "question",cascade = CascadeType.ALL)

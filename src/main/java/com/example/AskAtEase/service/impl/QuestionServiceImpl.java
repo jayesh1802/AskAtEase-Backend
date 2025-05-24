@@ -2,9 +2,11 @@ package com.example.AskAtEase.service.impl;
 
 import com.example.AskAtEase.dto.QuestionDto;
 import com.example.AskAtEase.entity.Question;
+import com.example.AskAtEase.entity.User;
 import com.example.AskAtEase.exception.ResourceNotFound;
 import com.example.AskAtEase.mapper.QuestionMapper;
 import com.example.AskAtEase.repository.QuestionRepository;
+import com.example.AskAtEase.repository.UserRepository;
 import com.example.AskAtEase.service.QuestionService;
 import org.springframework.stereotype.Service;
 
@@ -13,31 +15,47 @@ import java.util.stream.Collectors;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
-    private  final QuestionRepository questionRepository;
+    private final QuestionRepository questionRepository;
     private final QuestionMapper questionMapper;
-    public QuestionServiceImpl(QuestionRepository questionRepository,QuestionMapper questionMapper ){
-        this.questionRepository=questionRepository;
-        this.questionMapper=questionMapper;
+    private final UserRepository userRepository;
+
+    public QuestionServiceImpl(
+            QuestionRepository questionRepository,
+            QuestionMapper questionMapper,
+            UserRepository userRepository
+    ) {
+        this.questionRepository = questionRepository;
+        this.questionMapper = questionMapper;
+        this.userRepository = userRepository;
     }
 
     @Override
     public QuestionDto addQuestion(QuestionDto questionDto) {
-        Question question=questionMapper.mapToQuestion(questionDto);
-        Question savedQuestion=questionRepository.save(question);
+        Question question = questionMapper.mapToQuestion(questionDto);
+
+        // Optional user binding
+        if (questionDto.getUserId() != null) {
+            User user = userRepository.findById(questionDto.getUserId())
+                    .orElseThrow(() -> new ResourceNotFound("User not found with id: " + questionDto.getUserId()));
+            question.setUser(user);
+        } else {
+            question.setUser(null);
+        }
+
+        // Save question and return DTO
+        Question savedQuestion = questionRepository.save(question);
         return questionMapper.mapToQuestionDto(savedQuestion);
     }
+
     @Override
-    public List<QuestionDto> getAllQuestions(){
-        List<Question> questions=questionRepository.findAll();
-        return questions.stream().map((question -> questionMapper.mapToQuestionDto(question)))
-                .collect(Collectors.toList());
+    public List<QuestionDto> getAllQuestions() {
+        List<Question> questions = questionRepository.findAll();
+        return questions.stream().map((question -> questionMapper.mapToQuestionDto(question))).collect(Collectors.toList());
     }
     @Override
-    public void deleteQuestion(Long queId){
-        Question question=questionRepository.findById(queId)
-                .orElseThrow(()-> new ResourceNotFound("Question does not exist"));
+    public void deleteQuestion(Long queId) {
+        Question question = questionRepository.findById(queId)
+                .orElseThrow(() -> new ResourceNotFound("Question does not exist"));
         questionRepository.deleteById(queId);
-
-
     }
 }

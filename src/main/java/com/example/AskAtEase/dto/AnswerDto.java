@@ -12,6 +12,7 @@ public class AnswerDto {
     private Long ansId;
     private String answer;
     private LocalDateTime createdAt;
-    private UserSummaryDto user;
-    private QuestionSummaryDto question;
+    private UserDto user;
+
+    private QuestionDto question;
 }

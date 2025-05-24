@@ -19,6 +19,7 @@ import java.util.List;
 public class Space {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "space_id")
     private Long spaceId;
     private String spaceName;
     private String description;
@@ -27,16 +28,16 @@ public class Space {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name="user_space",
-            joinColumns = @JoinColumn(name="spaceId"),
-            inverseJoinColumns = @JoinColumn(name="userId")
+            joinColumns = @JoinColumn(name="space_id"),
+            inverseJoinColumns = @JoinColumn(name="user_id")
     )
     private List<User> users=new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name="space_questions",
-            joinColumns = @JoinColumn(name="spaceId"),
-            inverseJoinColumns = @JoinColumn(name="queId")
+            joinColumns = @JoinColumn(name="space_id"),
+            inverseJoinColumns = @JoinColumn(name="que_id")
     )
     private List<Question> questions=new ArrayList<>();
 

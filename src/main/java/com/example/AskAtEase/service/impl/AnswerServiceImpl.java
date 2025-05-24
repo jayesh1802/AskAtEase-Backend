@@ -5,7 +5,6 @@ import com.example.AskAtEase.entity.Answer;
 import com.example.AskAtEase.entity.Question;
 import com.example.AskAtEase.exception.ResourceNotFound;
 import com.example.AskAtEase.mapper.AnswerMapper;
-import com.example.AskAtEase.mapper.QuestionMapper;
 import com.example.AskAtEase.repository.AnswerRepository;
 import com.example.AskAtEase.repository.QuestionRepository;
 import com.example.AskAtEase.service.AnswerService;

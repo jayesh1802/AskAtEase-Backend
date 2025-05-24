@@ -14,23 +14,24 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "ansId"
+        property = "ans_id"
 )
 @Entity
 @Table(name="answer")
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ans_id")
     private Long ansId;
     private String answer;
     private LocalDateTime createdAt;
 
     @ManyToOne
-    @JoinColumn(name="userIdFK",referencedColumnName = "userId")
+    @JoinColumn(name="user_idfk",referencedColumnName = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name="queIdFK",referencedColumnName = "queId")
+    @JoinColumn(name="que_idfk",referencedColumnName = "que_id")
     private Question question;
 
 
