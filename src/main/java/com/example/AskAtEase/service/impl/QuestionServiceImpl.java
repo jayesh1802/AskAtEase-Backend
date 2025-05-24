@@ -2,12 +2,14 @@ package com.example.AskAtEase.service.impl;
 
 import com.example.AskAtEase.dto.QuestionDto;
 import com.example.AskAtEase.entity.Question;
+import com.example.AskAtEase.exception.ResourceNotFound;
 import com.example.AskAtEase.mapper.QuestionMapper;
 import com.example.AskAtEase.repository.QuestionRepository;
 import com.example.AskAtEase.service.QuestionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -26,6 +28,16 @@ public class QuestionServiceImpl implements QuestionService {
     }
     @Override
     public List<QuestionDto> getAllQuestions(){
+        List<Question> questions=questionRepository.findAll();
+        return questions.stream().map((question -> questionMapper.mapToQuestionDto(question)))
+                .collect(Collectors.toList());
+    }
+    @Override
+    public void deleteQuestion(Long queId){
+        Question question=questionRepository.findById(queId)
+                .orElseThrow(()-> new ResourceNotFound("Question does not exist"));
+        questionRepository.deleteById(queId);
+
 
     }
 }
