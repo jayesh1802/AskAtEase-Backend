@@ -15,6 +15,7 @@ public class QuestionDto {
     private String question;
     private LocalDateTime createdAt;
 //    private UserDto user;
+    private List<Long> spaceIds;
     private String userId;
     private List<AnswerDto> answers;
 

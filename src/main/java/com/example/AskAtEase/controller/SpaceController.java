@@ -1,5 +1,6 @@
 package com.example.AskAtEase.controller;
 
+import com.example.AskAtEase.dto.QuestionWithAnswerDto;
 import com.example.AskAtEase.dto.SpaceDto;
 import com.example.AskAtEase.entity.User;
 import com.example.AskAtEase.service.SpaceService;
@@ -16,6 +17,7 @@ public class SpaceController {
     public SpaceController(SpaceService spaceService){
         this.spaceService=spaceService;
     }
+
     @PostMapping
     public ResponseEntity<SpaceDto> createSpace(@RequestBody SpaceDto spaceDto){
         SpaceDto savedSpace=spaceService.createSpace(spaceDto);
@@ -35,6 +37,11 @@ public class SpaceController {
     public ResponseEntity<String> deleteSpaceById(@PathVariable("id") Long spaceId){
         spaceService.deleteSpaceById(spaceId);
         return ResponseEntity.ok("Deleted Space successfully");
+    }
+    @GetMapping("{spaceId}/queAns")
+    public ResponseEntity<List<QuestionWithAnswerDto>> getQuestionsWithAnswersBySpaceId(@PathVariable("spacdId") Long spaceId){
+        List<QuestionWithAnswerDto> queAns=spaceService.getQuestionsWithAnswersBySpaceId(spaceId);
+        return ResponseEntity.ok(queAns);
     }
 
 }

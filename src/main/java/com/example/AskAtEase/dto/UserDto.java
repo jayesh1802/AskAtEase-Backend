@@ -19,6 +19,8 @@ public class UserDto {
     private int followersCount;
     private int followingCount;
     private LocalDateTime createdAt;
-    private List<QuestionDto> questions;
-    private List<AnswerDto> answers;
+    private List<Long> queIds;
+    private List<Long> ansIds;
+//    private List<QuestionDto> questions;
+//    private List<AnswerDto> answers;
 }

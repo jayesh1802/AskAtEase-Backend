@@ -13,6 +13,10 @@ public class AnswerDto {
     private String answer;
     private LocalDateTime createdAt;
     private UserDto user;
-
+    private String userId;
+    private Long queId;
     private QuestionDto question;
+
+    public AnswerDto(Long ansId, String answer, String userId, LocalDateTime createdAt) {
+    }
 }

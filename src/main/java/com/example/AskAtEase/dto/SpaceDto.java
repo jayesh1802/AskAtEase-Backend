@@ -15,6 +15,8 @@ public class SpaceDto {
     private String spaceName;
     private String description;
     private LocalDateTime localDateTime;
-    private List<UserDto> users;
-    private List<QuestionDto> questions;
+    private List<String>userIds;
+    private List<Long>queIds;
+//    private List<UserDto> users;
+//    private List<QuestionDto> questions;
 }

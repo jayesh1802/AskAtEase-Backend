@@ -2,10 +2,12 @@ package com.example.AskAtEase.service.impl;
 
 import com.example.AskAtEase.dto.QuestionDto;
 import com.example.AskAtEase.entity.Question;
+import com.example.AskAtEase.entity.Space;
 import com.example.AskAtEase.entity.User;
 import com.example.AskAtEase.exception.ResourceNotFound;
 import com.example.AskAtEase.mapper.QuestionMapper;
 import com.example.AskAtEase.repository.QuestionRepository;
+import com.example.AskAtEase.repository.SpaceRepository;
 import com.example.AskAtEase.repository.UserRepository;
 import com.example.AskAtEase.service.QuestionService;
 import org.springframework.stereotype.Service;
@@ -18,15 +20,17 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
     private final QuestionMapper questionMapper;
     private final UserRepository userRepository;
-
+    private final SpaceRepository spaceRepository;
     public QuestionServiceImpl(
             QuestionRepository questionRepository,
             QuestionMapper questionMapper,
-            UserRepository userRepository
+            UserRepository userRepository,
+            SpaceRepository spaceRepository
     ) {
         this.questionRepository = questionRepository;
         this.questionMapper = questionMapper;
         this.userRepository = userRepository;
+        this.spaceRepository=spaceRepository;
     }
 
     @Override
@@ -41,6 +45,16 @@ public class QuestionServiceImpl implements QuestionService {
         } else {
             question.setUser(null);
         }
+        if (questionDto.getSpaceIds() != null && !questionDto.getSpaceIds().isEmpty()) {
+            List<Space> spaces = spaceRepository.findAllById(questionDto.getSpaceIds());
+
+            if (spaces.size() != questionDto.getSpaceIds().size()) {
+                throw new RuntimeException("Some space IDs are invalid or do not exist.");
+            }
+
+            question.setSpaces(spaces);
+        }
+
 
         // Save question and return DTO
         Question savedQuestion = questionRepository.save(question);

@@ -3,10 +3,12 @@ package com.example.AskAtEase.service.impl;
 import com.example.AskAtEase.dto.AnswerDto;
 import com.example.AskAtEase.entity.Answer;
 import com.example.AskAtEase.entity.Question;
+import com.example.AskAtEase.entity.User;
 import com.example.AskAtEase.exception.ResourceNotFound;
 import com.example.AskAtEase.mapper.AnswerMapper;
 import com.example.AskAtEase.repository.AnswerRepository;
 import com.example.AskAtEase.repository.QuestionRepository;
+import com.example.AskAtEase.repository.UserRepository;
 import com.example.AskAtEase.service.AnswerService;
 
 import java.util.List;
@@ -16,17 +18,22 @@ public class AnswerServiceImpl implements AnswerService {
     private final AnswerRepository answerRepository;
     private final AnswerMapper answerMapper;
     private final QuestionRepository questionRepository;
+    private final UserRepository userRepository;
     // why we are supposed to call constructor.
-    public  AnswerServiceImpl(AnswerRepository answerRepository,AnswerMapper answerMapper,QuestionRepository questionRepository){
+    public  AnswerServiceImpl(AnswerRepository answerRepository,AnswerMapper answerMapper,QuestionRepository questionRepository ,UserRepository userRepository){
         this.answerMapper=answerMapper;
         this.questionRepository=questionRepository;
         this.answerRepository=answerRepository;
+        this.userRepository=userRepository;
     }
     @Override
-    public AnswerDto addAnswerToQuestion(Long queId, AnswerDto answerDto){
+    public AnswerDto addAnswerToQuestion( AnswerDto answerDto,String userId,Long queId){
         Question question=questionRepository.findById(queId)
                 .orElseThrow(()->new ResourceNotFound("question does not exist"));
-        Answer answer=answerMapper.mapToAnswer(answerDto);
+        User user=userRepository.findById(userId)
+                .orElseThrow(()->new ResourceNotFound("user not found"));
+
+        Answer answer=answerMapper.mapToAnswer(answerDto,user,question);
         answer.setQuestion(question);
         Answer savedAnswer=answerRepository.save(answer);
         return answerMapper.mapToAnswerDto(savedAnswer);

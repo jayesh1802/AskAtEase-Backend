@@ -1,5 +1,6 @@
 package com.example.AskAtEase.service;
 
+import com.example.AskAtEase.dto.QuestionWithAnswerDto;
 import com.example.AskAtEase.dto.SpaceDto;
 import com.example.AskAtEase.entity.Space;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,6 @@ public interface SpaceService {
     List<SpaceDto> getAllSpace();
     SpaceDto getSpaceById(Long spaceId);
     void deleteSpaceById(Long spaceId);
+    List<QuestionWithAnswerDto> getQuestionsWithAnswersBySpaceId(Long spaceId);
+
 }

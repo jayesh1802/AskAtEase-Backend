@@ -25,7 +25,6 @@ public class Answer {
     private Long ansId;
     private String answer;
     private LocalDateTime createdAt;
-
     @ManyToOne
     @JoinColumn(name="user_idfk",referencedColumnName = "user_id")
     private User user;
