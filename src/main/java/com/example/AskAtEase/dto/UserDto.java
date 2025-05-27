@@ -21,6 +21,7 @@ public class UserDto {
     private LocalDateTime createdAt;
     private List<Long> queIds;
     private List<Long> ansIds;
+    private List<Long> spaceIds;
 //    private List<QuestionDto> questions;
 //    private List<AnswerDto> answers;
 }

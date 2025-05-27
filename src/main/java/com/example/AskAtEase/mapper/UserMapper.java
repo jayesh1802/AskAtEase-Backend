@@ -3,6 +3,7 @@ package com.example.AskAtEase.mapper;
 import com.example.AskAtEase.dto.UserDto;
 import com.example.AskAtEase.entity.Answer;
 import com.example.AskAtEase.entity.Question;
+import com.example.AskAtEase.entity.Space;
 import com.example.AskAtEase.entity.User;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +35,11 @@ public class UserMapper {
         if (user.getAnswers() != null) {
             userDto.setAnsIds(user.getAnswers().stream()
                     .map(Answer::getAnsId)
+                    .collect(Collectors.toList()));
+        }
+        if(user.getSpaces()!=null){
+            userDto.setSpaceIds(user.getSpaces().stream()
+                    .map(Space::getSpaceId)
                     .collect(Collectors.toList()));
         }
 
