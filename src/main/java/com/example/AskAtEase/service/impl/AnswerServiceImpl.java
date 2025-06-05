@@ -23,6 +23,7 @@ public class AnswerServiceImpl implements AnswerService {
     private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
     // why we are supposed to call constructor.
+
     public  AnswerServiceImpl(AnswerRepository answerRepository,AnswerMapper answerMapper,QuestionRepository questionRepository ,UserRepository userRepository){
         this.answerMapper=answerMapper;
         this.questionRepository=questionRepository;
@@ -62,7 +63,7 @@ public class AnswerServiceImpl implements AnswerService {
         questionWithAnswerDto.setQuestion(question.getQuestion());
         questionWithAnswerDto.setAnswers(answerDtos);
         questionWithAnswerDto.setCreatedAt(question.getCreatedAt());
-            questionWithAnswerDto.setUserId(question.getUser().getUserId());
+            questionWithAnswerDto.setUserId(question.getUser().getUsername());
 
 
         return questionWithAnswerDto;

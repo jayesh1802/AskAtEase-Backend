@@ -13,7 +13,7 @@ public class AnswerMapper {
         answerDto.setAnsId(answer.getAnsId());
         answerDto.setAnswer(answer.getAnswer());
         answerDto.setCreatedAt(answer.getCreatedAt());
-        answerDto.setUserId(answer.getUser().getUserId());
+        answerDto.setUserId(answer.getUser().getUsername());
         answerDto.setQueId(answer.getQuestion()!=null? answer.getQuestion().getQueId():null);
         return answerDto;
     }

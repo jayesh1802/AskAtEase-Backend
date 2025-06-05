@@ -23,7 +23,7 @@ public class QuestionMapper {
 
         // Set User ID
         if (question.getUser() != null) {
-            dto.setUserId(question.getUser().getUserId());
+            dto.setUserId(question.getUser().getUsername());
         }
 
         // Set Space IDs
@@ -42,7 +42,7 @@ public class QuestionMapper {
                     .map(answer -> new AnswerDto(
                             answer.getAnsId(),
                             answer.getAnswer(),
-                            answer.getUser() != null ? answer.getUser().getUserId() : null,
+                            answer.getUser() != null ? answer.getUser().getUsername() : null,
                             answer.getCreatedAt()))
                     .collect(Collectors.toList());
             dto.setAnswers(answerDtos);
@@ -69,7 +69,7 @@ public class QuestionMapper {
                 .map(answer -> new AnswerDto(
                         answer.getAnsId(),
                         answer.getAnswer(),
-                        answer.getUser() != null ? answer.getUser().getUserId() : null,
+                        answer.getUser() != null ? answer.getUser().getUsername() : null,
                         answer.getCreatedAt()))
                 .collect(Collectors.toList())
                 : Collections.emptyList();
@@ -77,7 +77,7 @@ public class QuestionMapper {
         return new QuestionWithAnswerDto(
                 question.getQueId(),
                 question.getQuestion(),
-                question.getUser() != null ? question.getUser().getUserId() : null,
+                question.getUser() != null ? question.getUser().getUsername() : null,
                 question.getCreatedAt(),
                 answerDtos
         );

@@ -5,4 +5,6 @@ import com.example.AskAtEase.entity.User;
 
 public interface UserService {
    UserDto createUser(UserDto userDto);
+//   User save(User user);
+//   User loadByUsername
 }

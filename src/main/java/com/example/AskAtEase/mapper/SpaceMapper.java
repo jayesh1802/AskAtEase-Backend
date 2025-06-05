@@ -22,7 +22,7 @@ public class SpaceMapper {
 
         if (space.getUsers() != null) {
             spaceDto.setUserIds(space.getUsers().stream()
-                    .map(User::getUserId)
+                    .map(User::getUsername)
 
                     .collect(Collectors.toList()));
         }

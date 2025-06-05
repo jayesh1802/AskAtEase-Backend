@@ -13,7 +13,7 @@ import java.util.List;
 // need to learn concept of serialize and infinite recursion.
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "que_id"
+        property = "queId"
 )
 @Data
 @Table(name="question")
