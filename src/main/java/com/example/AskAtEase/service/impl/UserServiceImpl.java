@@ -52,6 +52,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
+//        System.out.println("Loading user: " + username);
+//        System.out.println("Stored hashed password: " + user.getPassword());
+//        System.out.println("Password matches: " +passwordEncoder.matches("1234", user.getPassword()));
+
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
