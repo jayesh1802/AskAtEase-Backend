@@ -10,4 +10,8 @@ import java.util.List;
 public interface QuestionRepository extends JpaRepository<Question,Long> {
     @Query("SELECT q.question FROM Question q")
     List<String> findAllQuestions();
+
+    @Query("SELECT q FROM Question q LEFT JOIN FETCH q.answers")
+    List<Question> findAllWithAnswers();
+
 }

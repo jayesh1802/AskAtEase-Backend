@@ -23,6 +23,7 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ans_id")
     private Long ansId;
+    @Column(length = 10000)
     private String answer;
     private LocalDateTime createdAt;
     @ManyToOne
