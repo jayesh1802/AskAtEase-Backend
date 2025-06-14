@@ -17,8 +17,8 @@ public class SematicController {
     private final QuestionRepository questionRepository;
     private final RestTemplate restTemplate;
 
-    private final String SIMILAR_URL = "https://76ef-34-48-86-201.ngrok-free.app/similar";
-    private final String SUMMARIZE_URL = "https://76ef-34-48-86-201.ngrok-free.app/summarize";
+    private final String SIMILAR_URL = "https://604a-35-196-133-165.ngrok-free.app/similar";
+    private final String SUMMARIZE_URL = "https://604a-35-196-133-165.ngrok-free.app/summarize";
 
     @Autowired
     public SematicController(QuestionRepository questionRepository, RestTemplate restTemplate) {

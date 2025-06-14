@@ -63,7 +63,7 @@ public class AnswerServiceImpl implements AnswerService {
         questionWithAnswerDto.setQuestion(question.getQuestion());
         questionWithAnswerDto.setAnswers(answerDtos);
         questionWithAnswerDto.setCreatedAt(question.getCreatedAt());
-            questionWithAnswerDto.setUserId(question.getUser().getUsername());
+        questionWithAnswerDto.setUserId(question.getUser().getUsername());
 
 
         return questionWithAnswerDto;

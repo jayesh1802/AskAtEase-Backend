@@ -1,6 +1,8 @@
 package com.example.AskAtEase.service.impl;
 
 import com.example.AskAtEase.dto.QuestionDto;
+import com.example.AskAtEase.dto.QuestionWithAnswerDto;
+import com.example.AskAtEase.entity.Answer;
 import com.example.AskAtEase.entity.Question;
 import com.example.AskAtEase.entity.Space;
 import com.example.AskAtEase.entity.User;
@@ -71,5 +73,12 @@ public class QuestionServiceImpl implements QuestionService {
         Question question = questionRepository.findById(queId)
                 .orElseThrow(() -> new ResourceNotFound("Question does not exist"));
         questionRepository.deleteById(queId);
+    }
+    @Override
+    public List<QuestionWithAnswerDto> getAllQuestionAns(){
+        List<Question> queAns=questionRepository.findAllWithAnswers();
+        return queAns.stream()
+                .map(questionMapper::mapToQuestionWithAnswerDto)
+                .collect(Collectors.toList());
     }
 }

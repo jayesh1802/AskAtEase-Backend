@@ -63,7 +63,7 @@ public class QuestionMapper {
         return question;
     }
 
-    public QuestionWithAnswerDto mapToQuestionWithAnswerDto(Question question) {
+    public  QuestionWithAnswerDto mapToQuestionWithAnswerDto(Question question) {
         List<AnswerDto> answerDtos = question.getAnswers() != null
                 ? question.getAnswers().stream()
                 .map(answer -> new AnswerDto(

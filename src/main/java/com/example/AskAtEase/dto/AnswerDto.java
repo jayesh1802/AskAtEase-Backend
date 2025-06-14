@@ -18,5 +18,11 @@ public class AnswerDto {
     private QuestionDto question;
 
     public AnswerDto(Long ansId, String answer, String userId, LocalDateTime createdAt) {
+        this.ansId = ansId;
+        this.answer = answer;
+        this.userId = userId;
+        this.createdAt = createdAt;
     }
+
 }
+

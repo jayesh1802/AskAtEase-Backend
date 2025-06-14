@@ -33,7 +33,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         // Allow filter to continue for all other routes
-        if (!request.getServletPath().equals("/generate-token")) {
+        if (!request.getServletPath().equals("/auth/generate-token")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -56,7 +56,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
             refreshCookie.setHttpOnly(true);
             refreshCookie.setSecure(true);
-            refreshCookie.setPath("/refresh-token");
+            refreshCookie.setPath("/auth/refresh-token");
             refreshCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
             response.addCookie(refreshCookie);
 
@@ -65,7 +65,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             response.setCharacterEncoding("UTF-8");
 
             Map<String, String> tokenMap = new HashMap<>();
-            tokenMap.put("accessToken", accessToken);
+            tokenMap.put("token", accessToken);
             tokenMap.put("username", username);
 
             objectMapper.writeValue(response.getWriter(), tokenMap);
