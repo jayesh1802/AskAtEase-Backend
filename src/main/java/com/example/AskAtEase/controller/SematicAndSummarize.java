@@ -1,6 +1,7 @@
 package com.example.AskAtEase.controller;
 
 import com.example.AskAtEase.service.SematicService;
+import com.example.AskAtEase.service.SummarizeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,26 +9,29 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/search")
+@RequestMapping("/api")
 public class SematicAndSummarize{
 
     private final SematicService sematicService;
+    private final SummarizeService summarizeService;
 
     @Autowired
-    public SematicAndSummarize(SematicService sematicService) {
+    public SematicAndSummarize(SematicService sematicService,SummarizeService summarizeService) {
         this.sematicService = sematicService;
+        this.summarizeService=summarizeService;
     }
 
     // Endpoint: POST /api/semantic/similar-summary
-    @PostMapping()
-    public ResponseEntity<Map<String, Object>> getSimilarWithSummary(@RequestBody Map<String, String> request) {
-        String query = request.get("query");
+    @PostMapping("/ask")
+    public ResponseEntity<Map<String, Object>> getSimilarQuestions(@RequestBody Map<String, String> payload) {
+        String query = payload.get("query");
+        Map<String, Object> result = sematicService.getSimilarQuestionsWithSummary(query);
+        return ResponseEntity.ok(result);
+    }
 
-        if (query == null || query.trim().isEmpty()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Query text is required."));
-        }
-
-        Map<String, Object> response = sematicService.getSimilarQuestionsWithSummary(query);
-        return ResponseEntity.ok(response);
+    @GetMapping("/summary/{summaryId}")
+    public ResponseEntity<Map<String, String>> getSummary(@PathVariable String summaryId) {
+        Map<String, String> result = summarizeService.getSummaryResult(summaryId);
+        return ResponseEntity.ok(result);
     }
 }

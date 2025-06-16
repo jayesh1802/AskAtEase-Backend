@@ -4,27 +4,33 @@ import com.example.AskAtEase.entity.Answer;
 import com.example.AskAtEase.entity.Question;
 import com.example.AskAtEase.repository.QuestionRepository;
 import com.example.AskAtEase.service.SematicService;
+import com.example.AskAtEase.service.SummarizeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
 public class SematicServiceImpl implements SematicService {
+    private final Map<String, String> summaryResults = new ConcurrentHashMap<>();
 
     private final QuestionRepository questionRepository;
     private final RestTemplate restTemplate;
+    private final SummarizeService summarizeService;
 
     private final String EMBEDDING_URL = "http://localhost:8001/embed";
     private final String SUMMARIZE_URL = "http://localhost:8002/summarize";
 
     @Autowired
-    public SematicServiceImpl(QuestionRepository questionRepository, RestTemplate restTemplate) {
+    public SematicServiceImpl(QuestionRepository questionRepository, RestTemplate restTemplate,SummarizeService summarizeService) {
         this.questionRepository = questionRepository;
         this.restTemplate = restTemplate;
+        this.summarizeService=summarizeService;
     }
 
     @Override
@@ -76,24 +82,13 @@ public class SematicServiceImpl implements SematicService {
             qMap.put("answers", answerTexts); // Optional: for frontend display
             similarWithAnswers.add(qMap);
         }
+        String summaryId = UUID.randomUUID().toString();
+        summarizeService.generateSummaryAsync(summaryId, allAnswerTexts);
 
-        Map<String, Object> summarizePayload = Map.of("answers", allAnswerTexts);
-        HttpEntity<Map<String, Object>> summarizeRequest = new HttpEntity<>(summarizePayload, headers);
-
-        String summary;
-        try {
-            ResponseEntity<Map> summarizeResponse = restTemplate.postForEntity(SUMMARIZE_URL, summarizeRequest, Map.class);
-            summary = (summarizeResponse.getStatusCode() == HttpStatus.OK && summarizeResponse.getBody() != null)
-                    ? (String) summarizeResponse.getBody().get("summary")
-                    : "Summary service returned no result.";
-        } catch (Exception e) {
-            summary = "Failed to connect to summary service.";
-        }
-
-        // Step 6: Construct response
         Map<String, Object> result = new HashMap<>();
         result.put("similar", similarWithAnswers);
-        result.put("summary", summary);
+        result.put("summaryId", summaryId); // <-- Return the ID, not the summary
         return result;
     }
+
 }
