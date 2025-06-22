@@ -30,7 +30,7 @@
 
 ### ⚡ **Performance Optimizations**
 - **Redis Caching**: Lightning-fast repeated query responses
-- **Asynchronous Processing**: Non-blocking API operations
+- **Asynchronous Processing**: Non-blocking API operations for Summarization
 - **Vector Search**: Optimized similarity search with pgvector
 
 ---
@@ -252,7 +252,6 @@ Once the application is running, access the interactive API documentation:
 #### Search & Discovery
 - `GET /api/search` - Search questions and answers
 - `GET /api/questions/{id}/similar` - Find similar questions
-- `GET /api/questions/recommendations` - Get personalized recommendations
 
 ---
 
