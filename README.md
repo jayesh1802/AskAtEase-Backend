@@ -29,7 +29,6 @@
 - **Topic Spaces**: Organized content by subject areas
 
 ### ⚡ **Performance Optimizations**
-- **Redis Caching**: Lightning-fast repeated query responses
 - **Asynchronous Processing**: Non-blocking API operations for Summarization
 - **Vector Search**: Optimized similarity search with pgvector
 
@@ -40,7 +39,6 @@
 ### Backend Infrastructure
 - **Framework**: Java Spring Boot 3.x
 - **Database**: PostgreSQL 14+ with `pgvector` extension
-- **Cache**: Redis 7.x for high-performance caching
 - **Security**: Spring Security with JWT tokens
 
 ### AI/ML Services
@@ -69,12 +67,7 @@
                        │ PostgreSQL  │         │ ML Models   │
                        │ + pgvector  │         │ (HuggingFace)│
                        └─────────────┘         └─────────────┘
-                              │
-                              ▼
-                       ┌─────────────┐
-                       │    Redis    │
-                       │   Cache     │
-                       └─────────────┘
+                              
 ```
 
 ---
@@ -86,7 +79,6 @@ Before setting up AskAtEase, ensure you have the following installed:
 - **Java Development Kit**: 17 or higher
 - **Python**: 3.10 or higher with pip
 - **PostgreSQL**: 14+ with `pgvector` extension
-- **Redis**: 7.x for caching
 - **Maven**: 3.8+ for dependency management
 - **Git**: For version control
 
@@ -115,21 +107,8 @@ CREATE USER askatease_user WITH PASSWORD 'your_password';
 GRANT ALL PRIVILEGES ON DATABASE askatease_db TO askatease_user;
 ```
 
-### 3. Redis Setup
-```bash
-# Install Redis (Ubuntu/Debian)
-sudo apt update
-sudo apt install redis-server
 
-# Start Redis service
-sudo systemctl start redis-server
-sudo systemctl enable redis-server
-
-# Verify installation
-redis-cli ping
-```
-
-### 4. Backend Configuration
+### 3. Backend Configuration
 
 #### Update `application.yml`
 ```yaml
@@ -191,9 +170,9 @@ uvicorn main:app --host 0.0.0.0 --port 8001 --reload
 ### 6. Verify Installation
 
 Check if all services are running:
-- **Spring Boot**: http://localhost:8080/actuator/health
+- **Spring Boot**: http://localhost:8080/actuator/heal
 - **FastAPI**: http://localhost:8001/docs
-- **Redis**: `redis-cli ping`
+
 - **PostgreSQL**: Connect via your preferred client
 
 ---
@@ -209,10 +188,6 @@ DB_PORT=5432
 DB_NAME=askatease_db
 DB_USER=askatease_user
 DB_PASSWORD=your_password
-
-# Redis Configuration
-REDIS_HOST=localhost
-REDIS_PORT=6379
 
 # JWT Configuration
 JWT_SECRET=your-super-secret-jwt-key
