@@ -45,13 +45,26 @@ public class Question {
     @JsonIgnore
     List<Space> spaces =new ArrayList<>();
 
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vote> votes = new ArrayList<>();
+
     public void setAnswers(List<Answer> answers){
         this.answers=answers;
         for(Answer answer:answers){
             answer.setQuestion(this);
 
         }
-
     }
+    // setting the question in the vote entity..
+    public void setVotes(List<Vote> votes){
+        this.votes=votes;
+        for(Vote vote:votes){
+            vote.setQuestion(this);
+
+        }
+    }
+
+
+
 
 }

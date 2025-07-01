@@ -23,7 +23,7 @@ public class Space {
     private Long spaceId;
     private String spaceName;
     private String description;
-    private LocalDateTime localDateTime;
+    private LocalDateTime createdAt;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(

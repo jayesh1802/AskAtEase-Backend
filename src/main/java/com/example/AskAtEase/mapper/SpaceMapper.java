@@ -18,7 +18,7 @@ public class SpaceMapper {
         spaceDto.setSpaceId(space.getSpaceId());
         spaceDto.setSpaceName(space.getSpaceName());
         spaceDto.setDescription(space.getDescription());
-        spaceDto.setLocalDateTime(space.getLocalDateTime());
+        spaceDto.setLocalDateTime(space.getCreatedAt());
 
         if (space.getUsers() != null) {
             spaceDto.setUserIds(space.getUsers().stream()
@@ -45,7 +45,7 @@ public class SpaceMapper {
         space.setSpaceId(spaceDto.getSpaceId());
         space.setSpaceName(spaceDto.getSpaceName());
         space.setDescription(spaceDto.getDescription());
-        space.setLocalDateTime(spaceDto.getLocalDateTime());
+        space.setCreatedAt(spaceDto.getLocalDateTime());
         return space;
         
     }

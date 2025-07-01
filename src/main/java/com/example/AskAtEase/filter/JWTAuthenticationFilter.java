@@ -49,7 +49,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         // On successful authentication, generate and return tokens
         if (authResult.isAuthenticated()) {
             String username = authResult.getName();
-            String accessToken = jwtUtil.generateToken(username, 15); // 15 minutes
+            String accessToken = jwtUtil.generateToken(username, 1440); //1 day
             String refreshToken = jwtUtil.generateToken(username, 7 * 24 * 60); // 7 days
 
             // Set refresh token in HttpOnly cookie

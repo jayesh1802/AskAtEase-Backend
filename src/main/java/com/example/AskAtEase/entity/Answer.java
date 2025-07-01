@@ -43,6 +43,17 @@ public class Answer {
     @Column(name = "answerEmbedding", columnDefinition = "vector(384)")
     private List<Double> answerEmbedding;
 
+    @OneToMany(mappedBy = "answer",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vote> votes;
+
+    public void setVotes(List<Vote> votes){
+        this.votes=votes;
+        for(Vote vote:votes){
+            vote.setAnswer(this);
+        }
+    }
+
+
 
 
 
