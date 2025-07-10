@@ -22,7 +22,7 @@ public class SummarizeServiceImpl implements SummarizeService {
     public SummarizeServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
-
+    // we are generating this summary asynchronosly
     @Async
     public void generateSummaryAsync(String summaryId, List<String> allAnswerTexts) {
         summaryResults.put(summaryId, "pending");
@@ -44,6 +44,7 @@ public class SummarizeServiceImpl implements SummarizeService {
 
         summaryResults.put(summaryId, summary);
     }
+
 
     public Map<String, String> getSummaryResult(String summaryId) {
         String summary = summaryResults.getOrDefault(summaryId, "not_found");

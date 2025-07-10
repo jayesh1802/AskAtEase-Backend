@@ -24,7 +24,6 @@ public class SematicServiceImpl implements SematicService {
     private final SummarizeService summarizeService;
 
     private final String EMBEDDING_URL = "http://localhost:8001/embed";
-    private final String SUMMARIZE_URL = "http://localhost:8002/summarize";
 
     @Autowired
     public SematicServiceImpl(QuestionRepository questionRepository, RestTemplate restTemplate,SummarizeService summarizeService) {
@@ -35,7 +34,7 @@ public class SematicServiceImpl implements SematicService {
 
     @Override
     public Map<String, Object> getSimilarQuestionsWithSummary(String query) {
-        // Step 1: Call FastAPI to get embedding of the query
+        // Call FastAPI to get embedding of the query
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         Map<String, String> embedPayload = Map.of("text", query);
@@ -57,12 +56,18 @@ public class SematicServiceImpl implements SematicService {
                 .map(val -> ((Number) val).doubleValue())
                 .collect(Collectors.toList());
 
+        //convert the List<Embedding> to the string and for performing the sematic search using cosine similarity.
+
         String embeddingStr = embedding.toString().replaceAll("\\s+", "");
 
         List<Question> similarQuestions = questionRepository.findTopSimilarQuestions(embeddingStr, 5);
 
+        // we will pass the all AnswersText for performing the text summariation
         List<String> allAnswerTexts = new ArrayList<>();
+
+        // storing similar questions with answers
         List<Map<String, Object>> similarWithAnswers = new ArrayList<>();
+
 
         for (Question q : similarQuestions) {
             List<Answer> answerList = q.getAnswers();
@@ -79,12 +84,14 @@ public class SematicServiceImpl implements SematicService {
             Map<String, Object> qMap = new HashMap<>();
             qMap.put("id", q.getQueId());
             qMap.put("question", q.getQuestion());
-            qMap.put("answers", answerTexts); // Optional: for frontend display
+            qMap.put("answers", answerTexts);
             similarWithAnswers.add(qMap);
         }
         String summaryId = UUID.randomUUID().toString();
+        // we are calling the summarizeService Asynchronously
         summarizeService.generateSummaryAsync(summaryId, allAnswerTexts);
 
+        // returning back the similar question and similar
         Map<String, Object> result = new HashMap<>();
         result.put("similar", similarWithAnswers);
         result.put("summaryId", summaryId); // <-- Return the ID, not the summary

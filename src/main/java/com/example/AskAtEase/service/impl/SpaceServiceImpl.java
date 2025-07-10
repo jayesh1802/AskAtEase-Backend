@@ -66,6 +66,7 @@ public class SpaceServiceImpl implements SpaceService {
                 .orElseThrow(() -> new ResourceNotFound("Space does not exist"));
         spaceRepository.delete(space);
     }
+    // get all Questions and answers of the particular space..
     @Override
     public List<QuestionWithAnswerDto> getQuestionsWithAnswersBySpaceId(Long spaceId){
         Space space=spaceRepository.findById(spaceId)

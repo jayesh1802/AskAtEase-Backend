@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-// need to learn concept of serialize and infinite recursion.
+// to avoid serialize and infinite recursion.
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "queId"
@@ -33,6 +33,9 @@ public class Question {
     @JoinColumn(name="user_idfk",referencedColumnName = "user_id")
     private User user;
 
+
+    //To store the embedding to perform the NLP tasks
+    //https://stackoverflow.com/questions/76553746/what-jpa-hibernate-data-type-should-i-use-to-support-the-vector-extension-in-a
     @Basic
     @Type(JsonType.class)
     @Column(name = "questionEmbedding", columnDefinition = "vector(384)")

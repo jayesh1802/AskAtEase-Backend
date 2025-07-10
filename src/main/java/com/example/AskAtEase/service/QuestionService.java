@@ -7,7 +7,11 @@ import com.example.AskAtEase.entity.Question;
 import java.util.List;
 
 public interface QuestionService {
+
+    // add Question
     QuestionDto addQuestion(QuestionDto questionDto);
+
+    //delete Question, only specific user can delete it
     void deleteQuestion(Long queId);
     List<QuestionDto> getAllQuestions();
     List<QuestionWithAnswerDto> getAllQuestionAns();

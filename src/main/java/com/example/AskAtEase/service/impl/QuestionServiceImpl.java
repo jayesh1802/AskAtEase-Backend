@@ -43,8 +43,8 @@ public class QuestionServiceImpl implements QuestionService {
         this.questionMapper = questionMapper;
         this.userRepository = userRepository;
         this.spaceRepository = spaceRepository;
-        this.restTemplate = new RestTemplate();     // ✅ initialized
-        this.objectMapper = new ObjectMapper();     // ✅ initialized
+        this.restTemplate = new RestTemplate();
+        this.objectMapper = new ObjectMapper();
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface QuestionRepository extends JpaRepository<Question,Long> {
     @Query("SELECT q FROM Question q LEFT JOIN FETCH q.answers")
     List<Question> findAllWithAnswers();
 
-
+    // for performing the sematic Search
     @Query(
             value = "SELECT * FROM question ORDER BY question_embedding <=> CAST(:embedding AS vector) LIMIT :limit",
             nativeQuery = true

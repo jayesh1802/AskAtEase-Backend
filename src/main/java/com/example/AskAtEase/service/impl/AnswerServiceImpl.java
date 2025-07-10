@@ -30,7 +30,6 @@ public class AnswerServiceImpl implements AnswerService {
     private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
     private final RestTemplate restTemplate;
-    // why we are supposed to call constructor.
 
     public  AnswerServiceImpl(AnswerRepository answerRepository,AnswerMapper answerMapper,QuestionRepository questionRepository ,UserRepository userRepository,RestTemplate restTemplate){
         this.answerMapper=answerMapper;
@@ -39,6 +38,7 @@ public class AnswerServiceImpl implements AnswerService {
         this.userRepository=userRepository;
         this.restTemplate=restTemplate;
     }
+
     @Override
     public AnswerDto addAnswerToQuestion( AnswerDto answerDto,String userId,Long queId){
         Question question=questionRepository.findById(queId)
@@ -49,6 +49,7 @@ public class AnswerServiceImpl implements AnswerService {
         Answer answer=answerMapper.mapToAnswer(answerDto,user,question);
 
         Answer savedAnswer=answerRepository.save(answer);
+        // calling Embed FastAPI to find and return the  embeddings
         try {
             String url = "http://localhost:8001/embed";
             HttpHeaders headers = new HttpHeaders();
@@ -74,6 +75,7 @@ public class AnswerServiceImpl implements AnswerService {
         }
         return answerMapper.mapToAnswerDto(savedAnswer);
     }
+
     @Override
     public List<AnswerDto> getAllAnswersOfQuestion(Long queId){
         Question question = questionRepository.findById(queId)
@@ -81,6 +83,8 @@ public class AnswerServiceImpl implements AnswerService {
         List<Answer> answers=answerRepository.findByQuestion_QueId(queId);
         return answers.stream().map((answer -> answerMapper.mapToAnswerDto(answer))).collect(Collectors.toList());
     }
+
+    // getAllAnswers along with Question in QuestionWithAnswerDTO
     @Override
     public QuestionWithAnswerDto getAllAnswersofQuestion(Long queId) {
         Question question = questionRepository.findById(queId)

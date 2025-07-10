@@ -12,15 +12,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/question")
 public class QuestionController {
+    // to avoid tight coupling
     private QuestionService questionService;
     public QuestionController(QuestionService questionService){
         this.questionService=questionService;
     }
+
+    // add question from client, userId required
     @PostMapping
     public ResponseEntity<QuestionDto> addQuestion(@RequestBody QuestionDto questionDto){
         QuestionDto savedQuestion=questionService.addQuestion(questionDto);
         return new ResponseEntity<>(savedQuestion, HttpStatus.CREATED);
     }
+
     @GetMapping
     public ResponseEntity<List<QuestionDto>> getAllQuestions(){
         List<QuestionDto> questions=questionService.getAllQuestions();

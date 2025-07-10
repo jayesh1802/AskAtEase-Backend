@@ -13,11 +13,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/answer")
 public class AnswerController {
+    // we are using to avoid tight coupling
     private final AnswerService answerService;
     public AnswerController(AnswerService answerService){
         this.answerService=answerService;
     }
 
+    //add answer to question, queId and userId required..
     @PostMapping("/question/{queId}/user/{userId}")
     public ResponseEntity<AnswerDto> addAnswerToQuestion(
             @RequestBody AnswerDto answerDto,
@@ -26,6 +28,7 @@ public class AnswerController {
         AnswerDto savedAnswer=answerService.addAnswerToQuestion(answerDto,userId,queId);
         return new ResponseEntity<>(savedAnswer, HttpStatus.CREATED);
     }
+
     @GetMapping("/question/{queId}")
     public ResponseEntity<QuestionWithAnswerDto> getQuestionWithAnswers(
             @PathVariable Long queId

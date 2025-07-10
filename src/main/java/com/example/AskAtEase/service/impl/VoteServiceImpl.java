@@ -37,6 +37,7 @@ public class VoteServiceImpl implements VoteService {
         User user=userRepository.findByUsername(userId)
                 .orElseThrow(()->new ResourceNotFound("User does not exist"));
         Optional<Vote> existingVoteOpt=voteRepository.findByUserAndQuestion(question,user);
+
         if(existingVoteOpt.isPresent()) {
             Vote existingVote = existingVoteOpt.get();
             if (existingVote.getVote() == VoteType.UPVOTE) {
