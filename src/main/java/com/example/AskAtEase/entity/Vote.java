@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Entity
 @Table(name = "votes", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"user_id", "question_id"}),
+        @UniqueConstraint(columnNames = {"user_id", "que_id"}),
         @UniqueConstraint(columnNames = {"user_id", "answer_id"})
 })
 @Data
@@ -22,11 +22,11 @@ public class Vote {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "question_id")
+    @JoinColumn(name = "que_id",referencedColumnName = "que_id")
     private Question question;
 
     @ManyToOne
-    @JoinColumn(name = "answer_id")
+    @JoinColumn(name = "answer_id", referencedColumnName = "ans_id")
     private Answer answer;
 
 
