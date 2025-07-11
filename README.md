@@ -205,24 +205,63 @@ Once the application is running, access the interactive API documentation:
 - **Swagger UI**: http://localhost:8080/swagger-ui.html
 - **API Docs**: http://localhost:8080/v3/api-docs
 
-### Key Endpoints
+## 🔑 Key Endpoints
 
-#### Authentication
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-- `POST /api/auth/refresh` - Refresh JWT token
-
-#### Questions & Answers
-- `GET /api/questions` - List all questions
-- `POST /api/questions` - Create a new question
-- `GET /api/questions/{id}` - Get question details
-- `POST /api/questions/{id}/answers` - Add an answer
-
-#### Search & Discovery
-- `GET /api/search` - Search questions and answers
-- `GET /api/questions/{id}/similar` - Find similar questions
+### 🔐 Authentication
+- `POST /auth/register` - User registration  
+- `POST /auth/generate-token` - Generate JWT token  
+- `POST /api/auth/login` - User login  
+- `POST /api/auth/refresh` - Refresh JWT token  
 
 ---
+
+### 👤 User
+- `GET /api/user` - Get all users  
+- `POST /api/user` - Create a new user  
+
+---
+
+### 📚 Space
+- `GET /api/space` - Get all spaces  
+- `POST /api/space` - Create a new space  
+- `GET /api/space/{id}` - Get a space by ID  
+- `DELETE /api/space/{id}` - Delete a space  
+- `GET /api/space/{spaceId}/queAns` - Get questions and answers in a space  
+
+---
+
+### ❓ Questions
+- `GET /api/question` - Get all questions  
+- `POST /api/question` - Create a new question  
+- `GET /api/question/answer` - Get answers to all questions  
+- `DELETE /api/question/{id}` - Delete a question  
+
+---
+
+### 💬 Answers
+- `POST /api/answer/question/{queId}/user/{userId}` - Post an answer to a question  
+- `GET /api/answer/question/{queId}` - Get all answers for a question  
+
+---
+
+### 👍 Voting
+- `POST /api/votes/question/{queId}/user/{userId}/upvote` - Upvote a question  
+- `POST /api/votes/question/{queId}/user/{userId}/downvote` - Downvote a question  
+- `POST /api/votes/answer/{answerId}/user/{userId}/upvote` - Upvote an answer  
+- `POST /api/votes/answer/{answerId}/user/{userId}/downvote` - Downvote an answer  
+
+---
+
+### 🧠 Semantic & Summary
+- `POST /api/ask` - Ask a question and get semantic answer  
+- `GET /api/summary/{summaryId}` - Get summary by ID  
+
+---
+
+### 🔍 Search & Discovery
+- `GET /api/search` - Search questions and answers  
+- `GET /api/questions/{id}/similar` - Find similar questions  
+
 
 
 ## 🤝 Contributing
