@@ -70,6 +70,7 @@
 ```
 
 ---
+## Database Design
 <img width="1325" height="1267" alt="AskatEase DB" src="https://github.com/user-attachments/assets/71010650-5694-46fa-b8e0-30c2d7508fc0" />
 
 
