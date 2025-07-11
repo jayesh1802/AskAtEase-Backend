@@ -43,14 +43,13 @@
 
 ### AI/ML Services
 - **NLP Engine**: FastAPI (Python) microservice
-- **Embeddings**: Sentence Transformers for semantic representations
-- **Summarization**: Hugging Face Transformer models
-- **Vector Operations**: pgvector for similarity computations
+- **Embeddings**: Sentence Transformers(all-MiniLM-L6-v2)for semantic representations
+- **Summarization**: Hugging Face Transformer models (sshleifer/distilbart-cnn-12-6)
+- **Vector Operations**: pgvector for embedding storing and similarity computations.
 
 ### Additional Tools
 - **Build Tool**: Maven
 - **API Documentation**: OpenAPI/Swagger
-- **Monitoring**: Actuator endpoints for health checks
 
 ---
 
@@ -81,7 +80,7 @@ Before setting up AskAtEase, ensure you have the following installed:
 - **PostgreSQL**: 14+ with `pgvector` extension
 - **Maven**: 3.8+ for dependency management
 - **Git**: For version control
-
+- **Docker** : For pgvector in windows
 ---
 
 ## 🚀 Installation & Setup
@@ -140,10 +139,6 @@ mvn clean install
 # Run the application
 mvn spring-boot:run
 
-# Or run the JAR file
-java -jar target/askatease-backend-1.0.0.jar
-```
-
 ### 5. NLP Service Setup
 
 #### Navigate to NLP service directory
@@ -164,18 +159,13 @@ pip install -r requirements.txt
 
 #### Start the FastAPI service
 ```bash
+1. For Generating Emebdding
 uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+2. For Text Summarization
+uvicorn main:app --host 0.0.0.0 --port 8002 --reload
+
 ```
 
-### 6. Verify Installation
-
-Check if all services are running:
-- **Spring Boot**: http://localhost:8080/actuator/heal
-- **FastAPI**: http://localhost:8001/docs
-
-- **PostgreSQL**: Connect via your preferred client
-
----
 
 ## 🔧 Configuration
 
@@ -194,7 +184,8 @@ JWT_SECRET=your-super-secret-jwt-key
 JWT_EXPIRATION=86400000
 
 # NLP Service
-NLP_SERVICE_URL=http://localhost:8001
+EMBEDDING_URL=(http://localhost:8001/embed)
+
 ```
 
 ### Application Profiles
@@ -230,27 +221,6 @@ Once the application is running, access the interactive API documentation:
 
 ---
 
-## 🧪 Testing
-
-### Run Unit Tests
-```bash
-mvn test
-```
-
-### Run Integration Tests
-```bash
-mvn verify
-```
-
-### Test Coverage
-```bash
-mvn jacoco:report
-```
-
-View coverage report at `target/site/jacoco/index.html`
-
----
-
 
 ## 🤝 Contributing
 
@@ -280,7 +250,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Issues**: [GitHub Issues](https://github.com/jayesh1802/AskAtEase-Backend/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/jayesh1802/AskAtEase-Backend/discussions)
-- **Email**: jayesh1802@example.com
+- **Email**: jayeshdpadiya1802@gmail.com
 
 ---
 
