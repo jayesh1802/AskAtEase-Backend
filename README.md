@@ -57,8 +57,8 @@
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Frontend      │    │   Spring Boot   │    │   FastAPI       │
-│   (Web/Mobile)  │───▶│   Backend       │───▶│   NLP Service   │
+│   Postman       │    │   Spring Boot   │    │   FastAPI       │
+│                │───▶│   Backend       │───▶│   NLP Service   │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
                               │                        │
                               ▼                        ▼
